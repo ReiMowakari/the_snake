@@ -43,6 +43,7 @@ clock = pygame.time.Clock()
 
 
 def handle_keys(game_object):
+    """Функция по обработке клавиш пользователя для движения змейки"""
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
             pygame.quit()
@@ -62,7 +63,7 @@ def handle_keys(game_object):
 # Описание классов:
 class GameObject:
     """Базовый класс, от которого наследуются другие игровые объекты."""
-    # Базовый цвет по умолчанию
+
     body_color = (255, 255, 255)
 
     def __init__(self):
@@ -71,14 +72,14 @@ class GameObject:
 
     def draw(self):
         """абстрактный метод отрисовки игровых объектов, говорящий о том,
-         что каждый дочерний объект обязательно должен иметь метод отрисовки
-         и переопределяться дочерним классом.
-         """
+         что каждый дочерний объект обязательно должен иметь метод отрисовки.
+        """
         pass
 
 
 class Apple(GameObject):
     """Инициализация объекта Яблоко."""
+
     def __init__(self, body_color=APPLE_COLOR):
         super().__init__()
         self.position = self.randomize_position()
@@ -89,15 +90,13 @@ class Apple(GameObject):
         """Задаёт и возвращает случайную позицию."""
         return (
                 randint(0, GRID_WIDTH - 1) * GRID_SIZE,
-                randint(0, GRID_HEIGHT - 1) * GRID_SIZE,
-        )
+                randint(0, GRID_HEIGHT - 1) * GRID_SIZE,)
 
     def draw(self, surface):
         """метод отрисовки объекта"""
         rect = pygame.Rect(
            (self.position[0], self.position[1]),
-           (GRID_SIZE, GRID_SIZE)
-         )
+           (GRID_SIZE, GRID_SIZE))
         pygame.draw.rect(surface, self.body_color, rect)
         pygame.draw.rect(surface, BORDER_COLOR, rect, 1)
 
@@ -126,8 +125,10 @@ class Snake(GameObject):
     def move(self):
         """обновляет позицию змейки (координаты каждой секции)"""
         current_head_pos = self.get_head_position()
-        new_head_pos = ((current_head_pos[0] + self.direction[0] * GRID_SIZE) % SCREEN_WIDTH,
-                        (current_head_pos[1] + self.direction[1] * GRID_SIZE) % SCREEN_HEIGHT)
+        new_head_pos = ((current_head_pos[0] + self.direction[0] * GRID_SIZE)
+                        % SCREEN_WIDTH,
+                        (current_head_pos[1] + self.direction[1] * GRID_SIZE)
+                        % SCREEN_HEIGHT)
 
         # Условие для сброса змейки после столкновения с собой
         if new_head_pos in self.positions[2:]:
@@ -158,8 +159,7 @@ class Snake(GameObject):
         if self.last:
             last_rect = pygame.Rect(
              (self.last[0], self.last[1]),
-             (GRID_SIZE, GRID_SIZE)
-            )
+             (GRID_SIZE, GRID_SIZE))
             pygame.draw.rect(surface, BOARD_BACKGROUND_COLOR, last_rect)
 
     def reset(self):
@@ -170,7 +170,7 @@ class Snake(GameObject):
 
 
 def main():
-    # Создание объектов яблоко и змейка.
+    """Создание объектов яблоко и змейка."""
     apple = Apple()
     snake = Snake()
     while True:
