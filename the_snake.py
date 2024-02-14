@@ -30,7 +30,7 @@ APPLE_COLOR = (255, 0, 0)
 SNAKE_COLOR = (0, 255, 0)
 
 # Скорость движения змейки:
-SPEED = 10
+SPEED = 5
 
 # Настройка игрового окна:
 screen = pygame.display.set_mode((SCREEN_WIDTH, SCREEN_HEIGHT), 0, 32)
@@ -126,12 +126,9 @@ class Snake(GameObject):
     def move(self):
         """обновляет позицию змейки (координаты каждой секции)"""
         current_head_pos = self.get_head_position()
-        new_head_pos = (current_head_pos[0] + self.direction[0] * GRID_SIZE,
-                        current_head_pos[1] + self.direction[1] * GRID_SIZE)
+        new_head_pos = ((current_head_pos[0] + self.direction[0] * GRID_SIZE) % SCREEN_WIDTH,
+                        (current_head_pos[1] + self.direction[1] * GRID_SIZE) % SCREEN_HEIGHT)
 
-        # Проверка на столкновение с краем игрового поля
-        if not (0 <= new_head_pos[0] < SCREEN_WIDTH and 0 <= new_head_pos[1] < SCREEN_HEIGHT):
-            self.reset()
         # Условие для сброса змейки после столкновения с собой
         if new_head_pos in self.positions[2:]:
             self.reset()
@@ -178,14 +175,12 @@ def main():
     snake = Snake()
     while True:
         clock.tick(SPEED)
-        # Основная логика игры.
         handle_keys(snake)
         snake.update_direction()
         snake.move()
         # Проверка на съедение яблока
         if snake.get_head_position() == apple.position:
             snake.length += 1
-            snake.draw(screen)
             apple = Apple()
         screen.fill(BOARD_BACKGROUND_COLOR)
         apple.draw(screen)
