@@ -94,9 +94,8 @@ class Apple(GameObject):
 
     def draw(self, surface):
         """метод отрисовки объекта"""
-        rect = pygame.Rect(
-           (self.position[0], self.position[1]),
-           (GRID_SIZE, GRID_SIZE))
+        rect = pygame.Rect((self.position[0], self.position[1]),
+                           (GRID_SIZE, GRID_SIZE))
         pygame.draw.rect(surface, self.body_color, rect)
         pygame.draw.rect(surface, BORDER_COLOR, rect, 1)
 
@@ -121,7 +120,6 @@ class Snake(GameObject):
 
     def get_head_position(self):
         """возвращает позицию головы змейки"""
-
         return self.positions[0]
 
     def move(self):
@@ -146,7 +144,8 @@ class Snake(GameObject):
     def draw(self, surface):
         """отрисовка змейки"""
         for position in self.positions[:-1]:
-            rect = (pygame.Rect((position[0], position[1]), (GRID_SIZE, GRID_SIZE)))
+            rect = (pygame.Rect((position[0], position[1]),
+                                (GRID_SIZE, GRID_SIZE)))
             pygame.draw.rect(surface, self.body_color, rect)
             pygame.draw.rect(surface, BORDER_COLOR, rect, 1)
 
@@ -159,8 +158,8 @@ class Snake(GameObject):
     # Затирание последнего сегмента
         if self.last:
             last_rect = pygame.Rect(
-             (self.last[0], self.last[1]),
-             (GRID_SIZE, GRID_SIZE))
+                (self.last[0], self.last[1]),
+                (GRID_SIZE, GRID_SIZE))
             pygame.draw.rect(surface, BOARD_BACKGROUND_COLOR, last_rect)
 
     def reset(self):
