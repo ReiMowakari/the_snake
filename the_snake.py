@@ -90,7 +90,7 @@ class Apple(GameObject):
         return (randint(0, GRID_WIDTH - 1) * GRID_SIZE,
                 randint(0, GRID_HEIGHT - 1) * GRID_SIZE,)
 
-    def draw_Apple(self, surface):
+    def draw_apple(self, surface):
         """метод отрисовки объекта Яблоко."""
         Apple.draw(self, self.position[0], self.position[1], surface)
 
@@ -131,7 +131,7 @@ class Snake(GameObject):
         if len(self.positions) > self.length + 1:
             self.last = self.positions.pop()
 
-    def draw_Snake(self, surface):
+    def draw_snake(self, surface):
         """отрисовка змейки."""
         for position in self.positions[:-1]:
             x, y = position
@@ -172,8 +172,8 @@ def main():
             snake.length += 1
             apple = Apple()
         screen.fill(BOARD_BACKGROUND_COLOR)
-        apple.draw_Apple(screen)
-        snake.draw_Snake(screen)
+        apple.draw_apple(screen)
+        snake.draw_snake(screen)
         pg.display.update()
 
 
