@@ -92,7 +92,7 @@ class Apple(GameObject):
 
     def draw_apple(self, surface):
         """метод отрисовки объекта Яблоко."""
-        Apple.draw(self, self.position[0], self.position[1], surface)
+        self.draw(self.position[0], self.position[1], surface)
 
 
 class Snake(GameObject):
@@ -135,11 +135,11 @@ class Snake(GameObject):
         """отрисовка змейки."""
         for position in self.positions[:-1]:
             x, y = position
-            Snake.draw(self, x, y, surface)
+            self.draw(x, y, surface)
 
         # Отрисовка головы змейки
         x, y = self.positions[0]
-        Snake.draw(self, x, y, surface)
+        self.draw(x, y, surface)
 
         # Затирание последнего сегмента
         if self.last:
